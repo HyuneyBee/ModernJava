@@ -2,6 +2,9 @@ package com.example.part1.chapter2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class predicateApp {
     public static void main(String[] args) {
@@ -20,6 +23,14 @@ public class predicateApp {
         List<Apple> heavyApples = filterApples(inventory, apple -> apple.getWeight() > 150);
 
         List<Apple> abstractListRedApples = filter(inventory, apple -> Color.RED.equals(apple.getColor()));
+
+        // 람다로 인한 정렬
+        inventory.sort((apple1, apple2) -> apple1.getWeight().compareTo(apple2.getWeight()));
+
+        // 쓰레드 실행 람다
+        Thread t = new Thread(() -> System.out.println("Thread Start"));
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        Future<String> threadName = executorService.submit(() -> Thread.currentThread().getName());
     }
 
     // 함수형 인터페이스 활용한 필터 방법
