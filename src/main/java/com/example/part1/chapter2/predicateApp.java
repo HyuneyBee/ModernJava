@@ -18,6 +18,8 @@ public class predicateApp {
 
         // 람다 표현식
         List<Apple> heavyApples = filterApples(inventory, apple -> apple.getWeight() > 150);
+
+        List<Apple> abstractListRedApples = filter(inventory, apple -> Color.RED.equals(apple.getColor()));
     }
 
     // 함수형 인터페이스 활용한 필터 방법
@@ -26,6 +28,17 @@ public class predicateApp {
         for (Apple apple : inventory) {
             if (p.test(apple)) {
                 result.add(apple);
+            }
+        }
+        return result;
+    }
+
+    // 리스트 형식의 추상화
+    private static <T> List<T> filter(List<T> list, Predicate<T> t){
+        List<T> result = new ArrayList<>();
+        for(T e: list){
+            if(t.test(e)){
+                result.add(e);
             }
         }
         return result;
