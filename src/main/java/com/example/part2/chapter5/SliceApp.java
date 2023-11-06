@@ -24,5 +24,17 @@ public class SliceApp {
         List<Dish> dropCollect = specialMenu.stream().dropWhile(dish -> dish.getCalories() < 320)
             .collect(Collectors.toList());
 
+        // 스트림 축소
+        List<Dish> dishes = specialMenu.stream()
+            .filter(dish -> dish.getCalories() > 300)
+            .limit(3)
+            .collect(Collectors.toList());
+
+        // 요소 건너 뛰기
+        List<Dish> skipDishes = specialMenu.stream()
+            .filter(dish -> dish.getCalories() > 300)
+            .skip(2)
+            .collect(Collectors.toList());
+
     }
 }
