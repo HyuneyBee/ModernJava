@@ -73,6 +73,23 @@ public class Group {
                 collectingAndThen(
                     maxBy(Comparator.comparingInt(Dish::getCalories)),
                     Optional::get)));
+
+
+        // groupingBy 다른 컬렉터 사용
+        // 칼로리 합계
+        Map<Dish.Type, IntSummaryStatistics> totalCaloriesByType = menu.stream().collect(groupingBy(Dish::getType,
+            summarizingInt(Dish::getCalories)));
+
+        // 요리 형식의 CaloricLevel
+        Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType = menu.stream().collect(
+            groupingBy(Dish::getType, mapping(dish -> {
+                if (dish.getCalories() <= 400)
+                    return CaloricLevel.DIET;
+                else if (dish.getCalories() <= 700)
+                    return CaloricLevel.NORMAL;
+                else return CaloricLevel.FAT;
+            }, toSet())));
+
     }
 
     public enum CaloricLevel {DIET, NORMAL, FAT}
