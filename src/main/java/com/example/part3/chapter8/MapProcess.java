@@ -70,6 +70,35 @@ public class MapProcess {
         favouriteMovies2.replaceAll((f, m) -> m.toUpperCase());
 
 
+        // merge
+
+        // 키의 중복이 없을 때
+        Map<String, String> family = Map.ofEntries(Map.entry("Teo", "Star Wars"),
+            Map.entry("Cristina", "James Bond"));
+
+        Map<String, String> friends = Map.ofEntries(Map.entry("Raphael", "Star Wars"));
+        Map<String, String> everyone = new HashMap<>(family);
+        everyone.putAll(friends);
+
+
+        // 키의 중복이 있을 때
+        Map<String, String> family2 = Map.ofEntries(Map.entry("Teo", "Star Wars"),
+            Map.entry("Cristina", "James Bond"));
+
+        Map<String, String> friends2 = Map.ofEntries(Map.entry("Raphael", "Star Wars"),
+            Map.entry("Cristina", "Matrix"));
+
+        HashMap<String, String> everyone2 = new HashMap<>(family2);
+
+        friends2.forEach((k, v) ->
+            everyone2.merge(k, v, (m1, m2) -> m1 + " & " + m2));
+
+        // 영화를 몇 회 시청 했는지 기록
+
+        HashMap<String, Long> moviesToCount = new HashMap<>();
+        String movieName = "JamesBond";
+
+        moviesToCount.merge(movieName, 1L, (k, c) -> c + 1L);
 
     }
 }
